@@ -1,0 +1,32 @@
+# Starter pipeline
+
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- task: TerraformCLI@0
+  inputs:
+    command: 'init'
+    allowTelemetryCollection: false
+- task: TerraformCLI@0
+  inputs:
+    command: 'validate'
+    allowTelemetryCollection: false
+- task: TerraformCLI@0
+  inputs:
+    command: 'plan'
+    allowTelemetryCollection: false
+    environmentServiceName: "azure"
+
+- task: TerraformCLI@0
+  inputs:
+    command: 'apply'
+    environmentServiceName: "azure"
+    allowTelemetryCollection: false
